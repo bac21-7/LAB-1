@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
 
             // TÊN
             const Text(
-              "Johan Smith",
+              "John Wick",
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
