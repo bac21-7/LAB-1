@@ -1,0 +1,146 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Practice03(),
+    );
+  }
+}
+
+class Practice03 extends StatefulWidget {
+  const Practice03({super.key});
+
+  @override
+  State<Practice03> createState() => _Practice03State();
+}
+
+class _Practice03State extends State<Practice03> {
+  final TextEditingController _aController = TextEditingController();
+  final TextEditingController _bController = TextEditingController();
+
+  String result = '';
+
+  void calculate(String operator) {
+    double? a = double.tryParse(_aController.text);
+    double? b = double.tryParse(_bController.text);
+
+    if (a == null || b == null) {
+      setState(() {
+        result = 'Dữ liệu không hợp lệ';
+      });
+      return;
+    }
+
+    double res = 0;
+
+    switch (operator) {
+      case '+':
+        res = a + b;
+        break;
+      case '-':
+        res = a - b;
+        break;
+      case '*':
+        res = a * b;
+        break;
+      case '/':
+        if (b == 0) {
+          result = 'Không chia cho 0';
+          setState(() {});
+          return;
+        }
+        res = a / b;
+        break;
+    }
+
+    setState(() {
+      result = res.toString();
+    });
+  }
+
+  Widget buildButton(String text, Color color) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        minimumSize: const Size(50, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      onPressed: () => calculate(text),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 18, color: Colors.white),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Thực hành 03',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 20),
+
+            TextField(
+              controller: _aController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildButton('+', Colors.red),
+                buildButton('-', Colors.orange),
+                buildButton('*', Colors.deepPurple),
+                buildButton('/', Colors.black),
+              ],
+            ),
+
+            const SizedBox(height: 15),
+
+            TextField(
+              controller: _bController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Kết quả: $result',
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
