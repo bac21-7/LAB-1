@@ -54,7 +54,7 @@ class _Practice03State extends State<Practice03> {
         break;
       case '/':
         if (b == 0) {
-          result = 'Không chia cho 0';
+          result = '0';
           setState(() {});
           return;
         }
