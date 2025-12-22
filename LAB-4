@@ -1,0 +1,102 @@
+Nullable (có thể null) là một tính năng trong lập trình cho phép biến hoặc thuộc tính có thể chứa giá trị null (không có giá trị, giá trị bị thiếu/không xác định),
+ngoài các giá trị thông thường của kiểu dữ liệu đó, mang lại sự linh hoạt khi xử lý dữ liệu không rõ ràng hoặc chưa có.
+
+Nên dùng khi:
+Nhập dữ liệu từ người dùng
+API return có thể thiếu dữ liệu
+Chưa khởi tạo ngay
+Không dùng khi:
+Giá trị bắt buộc (id, tên người dùng, mật khẩu…)
+Có thể gán mặc định giá trị
+
+Các cách xử lý null phổ biến
+ -Safe call ?.
+val length = email?.length
+
+- Elvis operator ?:
+val length = email?.length ?: 0
+
+- let
+email?.let {
+    println("Email: $it")
+}
+
+- Non-null assertion !! (❌ hạn chế dùng)
+val length = email!!.length // crash nếu email = null
+ví dụ 
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: EmailNullableScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class EmailNullableScreen extends StatefulWidget {
+  @override
+  State<EmailNullableScreen> createState() => _EmailNullableScreenState();
+}
+
+class _EmailNullableScreenState extends State<EmailNullableScreen> {
+
+  String? inputEmail; // Nullable
+  String message = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Ví dụ Nullable - Flutter")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+
+            TextField(
+              decoration: const InputDecoration(
+                labelText: "Nhập email",
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  inputEmail = value;
+                });
+              },
+            ),
+
+            const SizedBox(height: 16),
+
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  message = inputEmail?.isEmpty ?? true
+                      ? "Email rỗng"
+                      : inputEmail!.contains("@")
+                          ? "Email hợp lệ"
+                          : "Email không hợp lệ";
+                });
+              },
+              child: const Text("Kiểm tra"),
+            ),
+
+            const SizedBox(height: 16),
+
+            Text(
+              message,
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
