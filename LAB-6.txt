@@ -148,7 +148,6 @@ class _ManageScreenState extends State<ManageScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// ===== CHỌN NGƯỜI MƯỢN =====
             const Text(
               'Chọn người mượn',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -170,7 +169,6 @@ class _ManageScreenState extends State<ManageScreen> {
 
             const SizedBox(height: 20),
 
-            /// ===== DANH SÁCH SÁCH =====
             const Text(
               'Danh sách sách',
               style: TextStyle(fontWeight: FontWeight.bold),
