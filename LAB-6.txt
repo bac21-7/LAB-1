@@ -149,22 +149,30 @@ class _ManageScreenState extends State<ManageScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Chọn người mượn',
+              'Nhân Viên',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 6),
-            DropdownButton<Student>(
-              value: widget.selectedUser,
-              isExpanded: true,
-              items: widget.users
-                  .map((u) => DropdownMenuItem(
-                        value: u,
+            ElevatedButton(
+              onPressed: () async {
+                final Student? chosen = await showDialog<Student>(
+                  context: context,
+                  builder: (_) => SimpleDialog(
+                    title: const Text('Chọn nhân viên'),
+                    children: widget.users.map((u) {
+                      return SimpleDialogOption(
+                        onPressed: () => Navigator.pop(context, u),
                         child: Text(u.name),
-                      ))
-                  .toList(),
-              onChanged: (u) {
-                if (u != null) widget.onUserChanged(u);
+                      );
+                    }).toList(),
+                  ),
+                );
+
+                if (chosen != null) {
+                  widget.onUserChanged(chosen);
+                }
               },
+              child: Text('Nhân viên: ${widget.selectedUser.name}       (Đổi)'),
             ),
 
             const SizedBox(height: 20),
