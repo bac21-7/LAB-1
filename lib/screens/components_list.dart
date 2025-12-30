@@ -47,7 +47,7 @@ class ComponentsList extends StatelessWidget {
           const SizedBox(height: 16),
 
           ListTile(
-            title: const Text("Tự tìm hiểu", style: TextStyle(fontWeight: FontWeight.bold)),
+            title: const Text("Mở rộng", style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: const Text("Tìm ra tất cả các thành phần UI cơ bản",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             tileColor: Colors.lightBlue[100],
